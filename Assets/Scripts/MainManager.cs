@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -18,6 +17,7 @@ public class MainManager : MonoBehaviour
     
     private bool m_GameOver = false;
 
+    public Text bestScore;
     
     // Start is called before the first frame update
     void Start()
@@ -60,6 +60,19 @@ public class MainManager : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene(0);
+        }
+
+        if(m_Points > GameManager.instance.bestScore)
+        {
+            GameManager.instance.bestScore = m_Points;
+            GameManager.instance.SaveScore();
+        }
+
+        bestScore.text = "Best Score: " + GameManager.instance.playerName + ": " + GameManager.instance.bestScore;
     }
 
     void AddPoint(int point)
